@@ -19,6 +19,8 @@ export interface BankOption {
   name: string;
   subName: string;
   shortName?: string;
+  defaultTransferType?: string;
+  hasNapas?: boolean;
 }
 
 export const SAMPLE_BILL_DATA: BillData = {
