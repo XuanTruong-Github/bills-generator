@@ -17,8 +17,7 @@ describe('App Integration', () => {
 
   it('renders header with branding, title, and action buttons', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: /VCB Digibank/i })).toBeInTheDocument();
-    expect(screen.getByText(/Bill Generator/i)).toBeInTheDocument();
+    expect(screen.getAllByAltText(/VCB Digibank/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole('button', { name: /Tải ảnh Bill/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Sao chép ảnh/i })).toBeInTheDocument();
   });

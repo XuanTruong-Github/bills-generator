@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from "react";
 import {
   Download,
   Copy,
@@ -7,44 +7,53 @@ import {
   FileEdit,
   Loader2,
   Sparkles,
-} from 'lucide-react';
-import { BillData, SAMPLE_BILL_DATA } from './types/bill';
-import { BillForm } from './components/form/BillForm';
-import { BillPreview } from './components/bill/BillPreview';
-import { IPhoneFrame } from './components/frame/IPhoneFrame';
-import { downloadBillImage, copyBillImageToClipboard } from './utils/exportImage';
-import { formatCurrentDateTime } from './utils/formatters';
-import { generateRandomReferenceCode, generateRandomTransactionId } from './utils/generators';
+} from "lucide-react";
+import { BillData, SAMPLE_BILL_DATA } from "./types/bill";
+import { BillForm } from "./components/form/BillForm";
+import { BillPreview } from "./components/bill/BillPreview";
+import { IPhoneFrame } from "./components/frame/IPhoneFrame";
+import {
+  downloadBillImage,
+  copyBillImageToClipboard,
+} from "./utils/exportImage";
+import { formatCurrentDateTime } from "./utils/formatters";
+import {
+  generateRandomReferenceCode,
+  generateRandomTransactionId,
+} from "./utils/generators";
 
 interface ToastState {
   message: string;
-  type: 'success' | 'error' | 'info';
+  type: "success" | "error" | "info";
 }
 
 export function App() {
   const [billData, setBillData] = useState<BillData>(SAMPLE_BILL_DATA);
   const [isExporting, setIsExporting] = useState(false);
   const [isCopying, setIsCopying] = useState(false);
-  const [activeTab, setActiveTab] = useState<'form' | 'preview'>('form');
+  const [activeTab, setActiveTab] = useState<"form" | "preview">("form");
   const [toast, setToast] = useState<ToastState | null>(null);
 
   const billRef = useRef<HTMLDivElement>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' = 'success') => {
-    if (toastTimeoutRef.current) {
-      clearTimeout(toastTimeoutRef.current);
-    }
-    setToast({ message, type });
-    toastTimeoutRef.current = setTimeout(() => {
-      setToast(null);
-      toastTimeoutRef.current = null;
-    }, 3500);
-  }, []);
+  const showToast = useCallback(
+    (message: string, type: "success" | "error" | "info" = "success") => {
+      if (toastTimeoutRef.current) {
+        clearTimeout(toastTimeoutRef.current);
+      }
+      setToast({ message, type });
+      toastTimeoutRef.current = setTimeout(() => {
+        setToast(null);
+        toastTimeoutRef.current = null;
+      }, 3500);
+    },
+    [],
+  );
 
   const handleResetSample = useCallback(() => {
     setBillData(SAMPLE_BILL_DATA);
-    showToast('Đã khôi phục dữ liệu mẫu ban đầu!', 'info');
+    showToast("Đã khôi phục dữ liệu mẫu ban đầu!", "info");
   }, [showToast]);
 
   const handleRandomize = useCallback(() => {
@@ -54,28 +63,28 @@ export function App() {
       transactionId: generateRandomTransactionId(),
       dateTime: formatCurrentDateTime(),
     }));
-    showToast('Đã tạo ngẫu nhiên mã và thời gian!', 'info');
+    showToast("Đã tạo ngẫu nhiên mã và thời gian!", "info");
   }, [showToast]);
 
   const handleDownload = useCallback(async () => {
     if (!billRef.current) {
-      showToast('Không tìm thấy khung hóa đơn để xuất ảnh.', 'error');
+      showToast("Không tìm thấy khung hóa đơn để xuất ảnh.", "error");
       return;
     }
     setIsExporting(true);
-    showToast('Đang tạo và tải ảnh hóa đơn...', 'info');
+    showToast("Đang tạo và tải ảnh hóa đơn...", "info");
 
     try {
       const filename = `vcb-bill-${billData.referenceCode || Date.now()}.png`;
       const success = await downloadBillImage(billRef.current, { filename });
       if (success) {
-        showToast('Tải ảnh hóa đơn (.PNG) thành công!', 'success');
+        showToast("Tải ảnh hóa đơn (.PNG) thành công!", "success");
       } else {
-        showToast('Không thể tải ảnh. Vui lòng thử lại.', 'error');
+        showToast("Không thể tải ảnh. Vui lòng thử lại.", "error");
       }
     } catch (err) {
-      console.error('Download error:', err);
-      showToast('Đã xảy ra lỗi khi tạo ảnh hóa đơn.', 'error');
+      console.error("Download error:", err);
+      showToast("Đã xảy ra lỗi khi tạo ảnh hóa đơn.", "error");
     } finally {
       setIsExporting(false);
     }
@@ -83,22 +92,22 @@ export function App() {
 
   const handleCopy = useCallback(async () => {
     if (!billRef.current) {
-      showToast('Không tìm thấy khung hóa đơn để sao chép.', 'error');
+      showToast("Không tìm thấy khung hóa đơn để sao chép.", "error");
       return;
     }
     setIsCopying(true);
-    showToast('Đang sao chép ảnh vào clipboard...', 'info');
+    showToast("Đang sao chép ảnh vào clipboard...", "info");
 
     try {
       const success = await copyBillImageToClipboard(billRef.current);
       if (success) {
-        showToast('Đã sao chép ảnh vào clipboard!', 'success');
+        showToast("Đã sao chép ảnh vào clipboard!", "success");
       } else {
-        showToast('Không thể sao chép ảnh vào clipboard.', 'error');
+        showToast("Không thể sao chép ảnh vào clipboard.", "error");
       }
     } catch (err) {
-      console.error('Copy error:', err);
-      showToast('Đã xảy ra lỗi khi sao chép ảnh.', 'error');
+      console.error("Copy error:", err);
+      showToast("Đã xảy ra lỗi khi sao chép ảnh.", "error");
     } finally {
       setIsCopying(false);
     }
@@ -120,18 +129,10 @@ export function App() {
                 alt="VCB Digibank"
                 className="h-8 w-auto object-contain shrink-0"
               />
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                    <span className="text-[#025938]">VCB Digibank</span> Bill Generator
-                  </h1>
-                  <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    iPhone 16 Pro Max
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500">
-                  Công cụ tạo hóa đơn chuyển tiền VCB Digibank (chuẩn bill.JPG)
-                </p>
+              <div className="flex items-center gap-2">
+                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  iPhone 16 Pro Max
+                </span>
               </div>
             </div>
 
@@ -175,12 +176,12 @@ export function App() {
           <button
             type="button"
             data-testid="tab-form"
-            data-active={activeTab === 'form' ? 'true' : 'false'}
-            onClick={() => setActiveTab('form')}
+            data-active={activeTab === "form" ? "true" : "false"}
+            onClick={() => setActiveTab("form")}
             className={`flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition-all ${
-              activeTab === 'form'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+              activeTab === "form"
+                ? "bg-white text-slate-900 shadow-xs"
+                : "text-slate-600 hover:text-slate-900"
             }`}
           >
             <FileEdit className="w-3.5 h-3.5" />
@@ -189,12 +190,12 @@ export function App() {
           <button
             type="button"
             data-testid="tab-preview"
-            data-active={activeTab === 'preview' ? 'true' : 'false'}
-            onClick={() => setActiveTab('preview')}
+            data-active={activeTab === "preview" ? "true" : "false"}
+            onClick={() => setActiveTab("preview")}
             className={`flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition-all ${
-              activeTab === 'preview'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+              activeTab === "preview"
+                ? "bg-white text-slate-900 shadow-xs"
+                : "text-slate-600 hover:text-slate-900"
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -209,7 +210,7 @@ export function App() {
           {/* Left Column: Input Form & Quick Controls */}
           <div
             className={`lg:col-span-7 xl:col-span-7 space-y-4 ${
-              activeTab === 'form' ? 'block' : 'hidden lg:block'
+              activeTab === "form" ? "block" : "hidden lg:block"
             }`}
           >
             <BillForm
@@ -223,7 +224,7 @@ export function App() {
           {/* Right Column: Sticky Live Preview */}
           <div
             className={`lg:col-span-5 xl:col-span-5 ${
-              activeTab === 'preview' ? 'block' : 'hidden lg:block'
+              activeTab === "preview" ? "block" : "hidden lg:block"
             }`}
           >
             <div className="lg:sticky lg:top-24 flex flex-col items-center">
@@ -256,7 +257,8 @@ export function App() {
 
               {/* User Guide Caption */}
               <p className="mt-4 text-center text-xs text-slate-400 max-w-xs">
-                Ảnh xuất ra là toàn bộ hóa đơn phẳng độ nét cao 1320px chuẩn file gốc (không bao gồm khung viền điện thoại).
+                Ảnh xuất ra là toàn bộ hóa đơn phẳng độ nét cao 1320px chuẩn
+                file gốc (không bao gồm khung viền điện thoại).
               </p>
             </div>
           </div>
@@ -270,16 +272,16 @@ export function App() {
           role="status"
           aria-live="polite"
           className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium transition-all ${
-            toast.type === 'error'
-              ? 'bg-rose-50 text-rose-800 border-rose-200'
-              : toast.type === 'info'
-              ? 'bg-blue-50 text-blue-800 border-blue-200'
-              : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+            toast.type === "error"
+              ? "bg-rose-50 text-rose-800 border-rose-200"
+              : toast.type === "info"
+                ? "bg-blue-50 text-blue-800 border-blue-200"
+                : "bg-emerald-50 text-emerald-800 border-emerald-200"
           }`}
         >
-          {toast.type === 'error' ? (
+          {toast.type === "error" ? (
             <span className="w-2 h-2 rounded-full bg-rose-500" />
-          ) : toast.type === 'info' ? (
+          ) : toast.type === "info" ? (
             <Sparkles className="w-4 h-4 text-blue-600" />
           ) : (
             <Check className="w-4 h-4 text-emerald-600" />
