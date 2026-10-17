@@ -7,6 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: {
+          DEFAULT: '#70A800',
+          hover: '#619200',
+          dark: '#527b00',
+          light: '#f2f8e6',
+          foreground: '#ffffff',
+        },
         vcb: {
           dark: '#025938',
           DEFAULT: '#025938',

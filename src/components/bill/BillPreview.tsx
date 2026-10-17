@@ -72,7 +72,7 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
             {/* Checkmark circle badge */}
             <div
               data-testid="checkmark-badge"
-              className="relative z-10 w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#1b8344] shadow-[0_4px_12px_rgba(27,131,68,0.25)] flex items-center justify-center text-white ring-4 ring-emerald-50"
+              className="relative z-10 w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-primary shadow-[0_4px_12px_rgba(112,168,0,0.28)] flex items-center justify-center text-white ring-4 ring-emerald-50"
             >
               <Check className="w-7 h-7 sm:w-8 sm:h-8 stroke-[3]" />
             </div>
@@ -83,7 +83,7 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
           </h2>
 
           <div className="flex items-baseline justify-center gap-1.5 mt-2">
-            <span className="text-3xl sm:text-[34px] font-black tracking-tight text-[#0f172a] leading-none">
+            <span className="text-[24px] font-black tracking-tight text-primary leading-none">
               {data.amount}
             </span>
             <span className="text-sm font-semibold text-gray-500 tracking-normal">
@@ -203,7 +203,7 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
             aria-label="Lưu mẫu"
             aria-checked={data.saveTemplate}
             className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out p-0.5 flex items-center cursor-default ${
-              data.saveTemplate ? 'bg-[#1b8344]' : 'bg-[#cbd5e1]'
+              data.saveTemplate ? 'bg-primary' : 'bg-[#cbd5e1]'
             }`}
           >
             <div

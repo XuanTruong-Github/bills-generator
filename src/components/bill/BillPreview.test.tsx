@@ -22,9 +22,12 @@ describe('BillPreview', () => {
     expect(screen.getByTestId('checkmark-badge')).toBeInTheDocument();
   });
 
-  it('renders transaction amount with VND label and date time', () => {
+  it('renders transaction amount with 24px font-size, primary color, VND label and date time', () => {
     render(<BillPreview data={SAMPLE_BILL_DATA} />);
-    expect(screen.getByText('110,000')).toBeInTheDocument();
+    const amountElement = screen.getByText('110,000');
+    expect(amountElement).toBeInTheDocument();
+    expect(amountElement).toHaveClass('text-[24px]');
+    expect(amountElement).toHaveClass('text-primary');
     expect(screen.getByText('VND')).toBeInTheDocument();
     expect(screen.getByText('09:08 Thứ Sáu 16/10/2026')).toBeInTheDocument();
   });

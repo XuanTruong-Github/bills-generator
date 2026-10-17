@@ -154,7 +154,7 @@ export function App() {
                 type="button"
                 onClick={handleDownload}
                 disabled={isExporting}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#025938] hover:bg-[#02442b] active:bg-[#013521] rounded-lg shadow-xs transition-colors disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-primary hover:bg-primary-hover active:bg-primary-dark rounded-lg shadow-xs transition-colors disabled:opacity-60 cursor-pointer"
               >
                 {isExporting ? (
                   <Loader2 className="w-4 h-4 animate-spin text-white" />

@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --primary: #70A800;
+  }
   body {
     @apply bg-slate-100 text-slate-900 antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
