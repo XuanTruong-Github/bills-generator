@@ -9,10 +9,10 @@ describe('BillPreview', () => {
     vi.restoreAllMocks();
   });
 
-  it('renders VCB header branding and circular Home button', () => {
+  it('renders VCB header branding using logo.svg and circular Home button', () => {
     render(<BillPreview data={SAMPLE_BILL_DATA} />);
-    expect(screen.getByText('VCB')).toBeInTheDocument();
-    expect(screen.getByText('Digibank')).toBeInTheDocument();
+    expect(screen.getByAltText('VCB Digibank')).toBeInTheDocument();
+    expect(screen.getByTestId('vcb-logo')).toHaveAttribute('src', '/logo.svg');
     expect(screen.getByRole('button', { name: /trang chủ/i })).toBeInTheDocument();
   });
 
@@ -22,12 +22,11 @@ describe('BillPreview', () => {
     expect(screen.getByTestId('checkmark-badge')).toBeInTheDocument();
   });
 
-  it('renders transaction amount with 24px font-size, primary color, VND label and date time', () => {
+  it('renders transaction amount with 24px font-size, VND label and date time', () => {
     render(<BillPreview data={SAMPLE_BILL_DATA} />);
     const amountElement = screen.getByText('110,000');
     expect(amountElement).toBeInTheDocument();
-    expect(amountElement).toHaveClass('text-[24px]');
-    expect(amountElement).toHaveClass('text-primary');
+    expect(amountElement).toHaveClass('text-2xl');
     expect(screen.getByText('VND')).toBeInTheDocument();
     expect(screen.getByText('09:08 Thứ Sáu 16/10/2026')).toBeInTheDocument();
   });
@@ -126,13 +125,9 @@ describe('BillPreview', () => {
     expect(screen.queryByText('100%')).not.toBeInTheDocument();
   });
 
-  it('renders bottom action buttons by default and hides them when showActions=false', () => {
-    const { rerender } = render(<BillPreview data={SAMPLE_BILL_DATA} />);
-    expect(screen.getByText('Chia sẻ')).toBeInTheDocument();
-    expect(screen.getByText('Thực hiện giao dịch mới')).toBeInTheDocument();
-
-    rerender(<BillPreview data={SAMPLE_BILL_DATA} showActions={false} />);
-    expect(screen.queryByText('Chia sẻ')).not.toBeInTheDocument();
-    expect(screen.queryByText('Thực hiện giao dịch mới')).not.toBeInTheDocument();
+  it('renders bill terminating at save template toggle switch matching bill.JPG', () => {
+    render(<BillPreview data={SAMPLE_BILL_DATA} />);
+    expect(screen.getByText('Lưu mẫu chuyển tiền')).toBeInTheDocument();
+    expect(screen.getByRole('switch', { name: /lưu mẫu/i })).toBeInTheDocument();
   });
 });

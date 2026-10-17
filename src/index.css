@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme inline {
+  --color-primary: oklch(0.666914 0.178087 129.4691);
+}
+
 @layer base {
-  :root {
-    --primary: #70A800;
-  }
   body {
     @apply bg-slate-100 text-slate-900 antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";

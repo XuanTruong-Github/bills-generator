@@ -1,8 +1,8 @@
-import { forwardRef, useState, useCallback } from 'react';
-import { Check, Home, Copy } from 'lucide-react';
-import { BillData } from '../../types/bill';
-import { BankLogo, NapasLogo, VCBLogoText } from './BankLogos';
-import { MandalaBackground } from './MandalaBackground';
+import { forwardRef, useState, useCallback } from "react";
+import { Check, Home, Copy } from "lucide-react";
+import { BillData } from "../../types/bill";
+import { BankLogo, NapasLogo, VCBLogoText } from "./BankLogos";
+import { MandalaBackground } from "./MandalaBackground";
 
 export interface BillPreviewProps {
   data: BillData;
@@ -18,7 +18,7 @@ export interface BillPreviewProps {
  * can attach directly to the canvas root DOM node.
  */
 export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
-  ({ data, className = '', showActions = true }, ref) => {
+  ({ data, className = "" }, ref) => {
     const [copied, setCopied] = useState(false);
 
     const handleCopyReference = useCallback(async () => {
@@ -28,25 +28,26 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
-        console.error('Failed to copy reference code:', err);
+        console.error("Failed to copy reference code:", err);
       }
     }, [data.referenceCode]);
 
-    const normalizedBankId = (data.bankId || '').trim().toLowerCase();
-    const isVCB = normalizedBankId === 'vietcombank' || normalizedBankId === 'vcb';
+    const normalizedBankId = (data.bankId || "").trim().toLowerCase();
+    const isVCB =
+      normalizedBankId === "vietcombank" || normalizedBankId === "vcb";
     const shouldShowNapas =
       !isVCB &&
-      (data.transferType.toLowerCase().includes('nhanh') ||
-        data.transferType.toLowerCase().includes('napas'));
+      (data.transferType.toLowerCase().includes("nhanh") ||
+        data.transferType.toLowerCase().includes("napas"));
 
     return (
       <div
         ref={ref}
         data-testid="bill-preview-canvas"
-        className={`relative w-full max-w-[420px] mx-auto min-h-[760px] bg-gradient-to-b from-[#f2f9f4] via-[#eaf5ed] to-[#f4faf5] text-[#0f172a] font-sans antialiased overflow-hidden flex flex-col p-5 sm:p-6 select-none ${className}`}
+        className={`relative w-full max-w-[420px] mx-auto min-h-[760px] bg-gradient-to-b from-[#f2f9f4] via-[#eaf5ed] to-[#f4faf5]  font-sans antialiased overflow-hidden flex flex-col p-5 sm:p-6 select-none ${className}`}
         style={{
-          boxSizing: 'border-box',
-          WebkitFontSmoothing: 'antialiased',
+          boxSizing: "border-box",
+          WebkitFontSmoothing: "antialiased",
         }}
       >
         {/* Authentic Dong Son / Lotus radial mandala SVG watermark */}
@@ -72,55 +73,56 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
             {/* Checkmark circle badge */}
             <div
               data-testid="checkmark-badge"
-              className="relative z-10 w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-primary shadow-[0_4px_12px_rgba(112,168,0,0.28)] flex items-center justify-center text-white ring-4 ring-emerald-50"
+              className="relative z-10 size-[40px] rounded-full bg-[#70a800] shadow-[0_4px_12px_rgba(27,131,68,0.25)] flex items-center justify-center text-white ring-4 ring-emerald-50"
             >
-              <Check className="w-7 h-7 sm:w-8 sm:h-8 stroke-[3]" />
+              <Check className="size-6 stroke-[3]" />
             </div>
           </div>
 
-          <h2 className="text-[#0f172a] font-bold text-xl sm:text-[22px] tracking-tight">
+          <h2 className="font-semibold text-green-900 text-base tracking-tight">
             Giao dịch thành công!
           </h2>
 
-          <div className="flex items-baseline justify-center gap-1.5 mt-2">
-            <span className="text-[24px] font-black tracking-tight text-primary leading-none">
+          <div className="flex items-start justify-center gap-1.5 mt-2">
+            <span className="text-2xl font-bold tracking-tight text-green-900 leading-none">
               {data.amount}
             </span>
-            <span className="text-sm font-semibold text-gray-500 tracking-normal">
-              VND
-            </span>
+            <span className="text-xs text-green-900 tracking-normal">VND</span>
           </div>
 
-          <p className="text-xs text-gray-500 font-medium mt-1.5">{data.dateTime}</p>
+          <p className="text-xs text-gray-500 font-medium mt-1.5">
+            {data.dateTime}
+          </p>
         </div>
 
         {/* 3. Detail Card */}
-        <div className="relative z-10 bg-white/95 backdrop-blur-sm rounded-[22px] shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-emerald-50/70 p-4 sm:p-5 mt-2 space-y-3">
+        <div className="relative z-10 rounded-xl border p-3 mt-2 space-y-3">
           {/* Row 1: Tài khoản nhận */}
-          <div className="flex justify-between items-center pb-2.5 border-b border-gray-100 text-sm">
-            <span className="text-gray-500 text-[13px]">Tài khoản nhận</span>
-            <span className="font-bold text-[#0f172a] text-[15px] tracking-wide">
+          <div className="flex justify-between items-center pb-2.5 border-b text-xs">
+            <span className="text-gray-500">Tài khoản nhận</span>
+            <span className="font-bold  tracking-wide">
               {data.accountNumber}
             </span>
           </div>
 
           {/* Row 2: Tên người nhận */}
-          <div className="flex justify-between items-center pb-2.5 border-b border-gray-100 text-sm">
-            <span className="text-gray-500 text-[13px]">Tên người nhận</span>
-            <span className="font-bold text-[#0f172a] text-[14px] uppercase text-right tracking-tight">
+          <div className="flex justify-between items-center pb-2.5 border-b text-xs">
+            <span className="text-gray-500">Tên người nhận</span>
+            <span className="font-bold  uppercase text-right tracking-tight">
               {data.accountName}
             </span>
           </div>
 
           {/* Row 3: Ngân hàng nhận */}
-          <div className="flex justify-between items-start pb-2.5 border-b border-gray-100 text-sm">
-            <span className="text-gray-500 text-[13px] pt-0.5">Ngân hàng nhận</span>
+          <div className="flex justify-between items-start pb-2.5 border-b text-xs">
+            <span className="text-gray-500 pt-0.5">Ngân hàng nhận</span>
             <div className="flex flex-col items-end text-right">
               <div className="flex items-center gap-1.5">
-                <BankLogo bankId={data.bankId} className="w-5 h-5 flex-shrink-0" />
-                <span className="font-extrabold text-[#0f172a] text-[14px]">
-                  {data.bankName}
-                </span>
+                <BankLogo
+                  bankId={data.bankId}
+                  className="w-5 h-5 flex-shrink-0"
+                />
+                <span className="font-extrabold ">{data.bankName}</span>
               </div>
               {data.bankSubName && (
                 <span className="text-[11px] text-gray-500 mt-0.5 font-normal">
@@ -131,18 +133,18 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
           </div>
 
           {/* Row 4: Nội dung */}
-          <div className="flex justify-between items-start pb-2.5 border-b border-gray-100 text-sm">
-            <span className="text-gray-500 text-[13px]">Nội dung</span>
-            <span className="font-bold text-[#0f172a] text-[13px] text-right max-w-[210px] break-words leading-snug">
+          <div className="flex justify-between items-start pb-2.5 border-b text-xs">
+            <span className="text-gray-500">Nội dung</span>
+            <span className="font-bold text-right max-w-[210px] break-words leading-snug">
               {data.content}
             </span>
           </div>
 
           {/* Row 5: Mã tham chiếu */}
-          <div className="flex justify-between items-center pb-2.5 border-b border-gray-100 text-sm">
-            <span className="text-gray-500 text-[13px]">Mã tham chiếu</span>
+          <div className="flex justify-between items-center pb-2.5 border-b text-xs">
+            <span className="text-gray-500">Mã tham chiếu</span>
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-[#0f172a] text-[13px] font-mono tracking-tight">
+              <span className="font-bold font-mono tracking-tight">
                 {data.referenceCode}
               </span>
               <button
@@ -162,20 +164,18 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
           </div>
 
           {/* Row 6: Phí chuyển tiền */}
-          <div className="flex justify-between items-center pb-2.5 border-b border-gray-100 text-sm">
-            <span className="text-gray-500 text-[13px]">Phí chuyển tiền</span>
-            <span className="font-semibold text-[#0f172a] text-[13px]">
-              {data.transferFee}
-            </span>
+          <div className="flex justify-between items-center pb-2.5 border-b text-xs">
+            <span className="text-gray-500">Phí chuyển tiền</span>
+            <span className="font-semibold">{data.transferFee}</span>
           </div>
 
           {/* Row 7: Hình thức chuyển */}
-          <div className="flex justify-between items-start pb-2.5 border-b border-gray-100 text-sm">
-            <span className="text-gray-500 text-[13px] pt-0.5">Hình thức chuyển</span>
+          <div className="flex justify-between items-start pb-2.5 border-b text-xs">
+            <span className="text-gray-500 pt-0.5">
+              Hình thức chuyển
+            </span>
             <div className="flex flex-col items-end text-right">
-              <span className="font-bold text-[#0f172a] text-[13px]">
-                {data.transferType}
-              </span>
+              <span className="font-bold">{data.transferType}</span>
               {shouldShowNapas && (
                 <div className="mt-0.5">
                   <NapasLogo className="text-xs" />
@@ -185,17 +185,17 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
           </div>
 
           {/* Row 8: Mã giao dịch */}
-          <div className="flex justify-between items-center text-sm pt-0.5">
-            <span className="text-gray-500 text-[13px]">Mã giao dịch</span>
-            <span className="font-bold text-[#0f172a] text-[13px] font-mono tracking-tight">
+          <div className="flex justify-between items-center text-xs pt-0.5">
+            <span className="text-gray-500">Mã giao dịch</span>
+            <span className="font-bold font-mono tracking-tight">
               {data.transactionId}
             </span>
           </div>
         </div>
 
         {/* 4. Lưu mẫu chuyển tiền toggle switch */}
-        <div className="relative z-10 flex items-center justify-between px-2 pt-3 pb-1">
-          <span className="text-[13.5px] font-medium text-gray-700">
+        <div className="relative z-10 flex items-center justify-between px-2 pt-3 pb-1 text-xs">
+          <span className="font-medium text-gray-700">
             Lưu mẫu chuyển tiền
           </span>
           <div
@@ -203,37 +203,19 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
             aria-label="Lưu mẫu"
             aria-checked={data.saveTemplate}
             className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out p-0.5 flex items-center cursor-default ${
-              data.saveTemplate ? 'bg-primary' : 'bg-[#cbd5e1]'
+              data.saveTemplate ? "bg-[#1b8344]" : "bg-[#cbd5e1]"
             }`}
           >
             <div
               className={`w-5 h-5 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out ${
-                data.saveTemplate ? 'translate-x-5' : 'translate-x-0'
+                data.saveTemplate ? "translate-x-5" : "translate-x-0"
               }`}
             />
           </div>
         </div>
-
-        {/* 5. Bottom Action Buttons */}
-        {showActions && (
-          <div className="relative z-10 flex items-center gap-3 pt-4 pb-1 mt-auto">
-            <button
-              type="button"
-              className="flex-1 py-2.5 px-4 rounded-xl border border-[#025938]/35 bg-white/70 text-[#025938] font-bold text-sm hover:bg-white active:scale-[0.98] transition-all"
-            >
-              Chia sẻ
-            </button>
-            <button
-              type="button"
-              className="flex-1 py-2.5 px-4 rounded-xl bg-[#025938] text-white font-bold text-sm shadow-[0_2px_8px_rgba(2,89,56,0.22)] hover:bg-[#024d31] active:scale-[0.98] transition-all"
-            >
-              Thực hiện giao dịch mới
-            </button>
-          </div>
-        )}
       </div>
     );
-  }
+  },
 );
 
-BillPreview.displayName = 'BillPreview';
+BillPreview.displayName = "BillPreview";

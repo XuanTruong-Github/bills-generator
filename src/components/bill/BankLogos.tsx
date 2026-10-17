@@ -241,29 +241,30 @@ export const NapasLogo: React.FC<NapasLogoProps> = ({ className = '' }) => {
   );
 };
 
-interface VCBLogoTextProps {
+export interface VCBLogoTextProps {
   className?: string;
+  alt?: string;
 }
 
 /**
- * Renders Vietcombank header branding text: "VCB" in dark green (#025938)
- * and "Digibank" in lime green (#65a30d), matching bill.JPG.
+ * Renders Vietcombank Digibank header branding logo using logo.svg.
  */
-export const VCBLogoText: React.FC<VCBLogoTextProps> = ({ className = '' }) => {
+export const VCBLogoText: React.FC<VCBLogoTextProps> = ({
+  className = '',
+  alt = 'VCB Digibank',
+}) => {
   return (
-    <div
-      className={`inline-flex items-baseline font-black tracking-tight text-xl ${className}`}
-      style={{ letterSpacing: '-0.4px' }}
-    >
-      <span style={{ color: '#025938', fontWeight: 900 }} className="text-[#025938] font-black">
-        VCB
-      </span>
-      <span
-        style={{ color: '#65a30d', fontWeight: 800, marginLeft: '4px' }}
-        className="text-[#65a30d] font-extrabold ml-1"
-      >
-        Digibank
-      </span>
+    <div className={`inline-flex items-center ${className}`} data-testid="vcb-logo-container">
+      <img
+        src="/logo.svg"
+        alt={alt}
+        className="h-7 w-auto object-contain"
+        data-testid="vcb-logo"
+      />
+      <span className="sr-only">VCB</span>
+      <span className="sr-only">Digibank</span>
     </div>
   );
 };
+
+export const VCBLogo = VCBLogoText;

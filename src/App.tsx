@@ -7,7 +7,6 @@ import {
   FileEdit,
   Loader2,
   Sparkles,
-  CheckCircle2,
 } from 'lucide-react';
 import { BillData, SAMPLE_BILL_DATA } from './types/bill';
 import { BillForm } from './components/form/BillForm';
@@ -116,9 +115,11 @@ export function App() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
             {/* Branding */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#025938] to-[#15803d] flex items-center justify-center text-white shadow-xs shrink-0">
-                <CheckCircle2 className="w-5 h-5 text-emerald-300" />
-              </div>
+              <img
+                src="/logo.svg"
+                alt="VCB Digibank"
+                className="h-8 w-auto object-contain shrink-0"
+              />
               <div>
                 <div className="flex items-center gap-2">
                   <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
