@@ -41,68 +41,78 @@ export const BillPreview = forwardRef<HTMLDivElement, BillPreviewProps>(
 
           <div>
             {/* iOS Status Bar */}
-            <div className="pt-3 px-8 pb-1 flex items-center justify-between text-[15px] font-semibold text-black bg-white">
-              {/* Left: Time + Location Arrow icon */}
-              <div className="flex items-center gap-1">
-                <span>{data.time || "21:17"}</span>
-                {/* Location indicator arrow */}
-                <svg
-                  className="w-3.5 h-3.5 fill-black transform -rotate-45 ml-0.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
-                </svg>
-              </div>
-
-              {/* Right: Cellular, Wifi, Battery */}
-              <div className="flex items-center gap-1.5 text-black">
-                {/* Cellular signal (4 dots/bars) */}
-                {data.showSignal && (
-                  <svg className="w-4 h-3" viewBox="0 0 17 12" fill="currentColor">
-                    <rect x="0" y="8" width="2.8" height="4" rx="0.5" />
-                    <rect x="4.5" y="5.2" width="2.8" height="6.8" rx="0.5" />
-                    <rect x="9" y="2.6" width="2.8" height="9.4" rx="0.5" />
-                    <rect x="13.5" y="0" width="2.8" height="12" rx="0.5" />
-                  </svg>
-                )}
-
-                {/* Wifi wave */}
-                {data.showWifi && (
+            {data.showStatusBar && (
+              <div className="pt-3 px-8 pb-1 flex items-center justify-between text-[15px] font-semibold text-black bg-white">
+                {/* Left: Time + Location Arrow icon */}
+                <div className="flex items-center gap-1">
+                  <span>{data.time || "21:17"}</span>
+                  {/* Location indicator arrow */}
                   <svg
-                    className="w-4 h-3"
-                    viewBox="0 0 16 12"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
+                    className="w-3.5 h-3.5 fill-black transform -rotate-45 ml-0.5"
+                    viewBox="0 0 24 24"
                   >
-                    <path d="M1 3.5 Q8 -1 15 3.5" />
-                    <path d="M3.2 6.5 Q8 3 12.8 6.5" />
-                    <path d="M5.5 9.5 Q8 7.5 10.5 9.5" />
-                    <circle cx="8" cy="11.2" r="0.75" fill="currentColor" stroke="none" />
+                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
                   </svg>
-                )}
+                </div>
 
-                {/* Battery capsule */}
-                <div className="flex items-center ml-0.5">
-                  <div className="relative w-[27px] h-[13px] border-[1.5px] border-black rounded-[4px] p-[1.5px] flex items-center">
-                    <div
-                      className="h-full bg-black rounded-[1.5px] transition-all"
-                      style={{
-                        width: `${Math.min(100, Math.max(10, data.batteryLevel))}%`,
-                      }}
-                    />
-                    <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white mix-blend-difference tracking-tighter">
-                      {data.batteryLevel}
-                    </span>
+                {/* Right: Cellular, Wifi, Battery */}
+                <div className="flex items-center gap-1.5 text-black">
+                  {/* Cellular signal (4 dots/bars) */}
+                  {data.showSignal && (
+                    <svg className="w-4 h-3" viewBox="0 0 17 12" fill="currentColor">
+                      <rect x="0" y="8" width="2.8" height="4" rx="0.5" />
+                      <rect x="4.5" y="5.2" width="2.8" height="6.8" rx="0.5" />
+                      <rect x="9" y="2.6" width="2.8" height="9.4" rx="0.5" />
+                      <rect x="13.5" y="0" width="2.8" height="12" rx="0.5" />
+                    </svg>
+                  )}
+
+                  {/* Wifi wave */}
+                  {data.showWifi && (
+                    <svg
+                      className="w-4 h-3"
+                      viewBox="0 0 16 12"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                    >
+                      <path d="M1 3.5 Q8 -1 15 3.5" />
+                      <path d="M3.2 6.5 Q8 3 12.8 6.5" />
+                      <path d="M5.5 9.5 Q8 7.5 10.5 9.5" />
+                      <circle cx="8" cy="11.2" r="0.75" fill="currentColor" stroke="none" />
+                    </svg>
+                  )}
+
+                  {/* Battery capsule */}
+                  <div className="flex items-center ml-0.5">
+                    <div className="relative w-[27px] h-[13px] border-[1.5px] border-black rounded-[4px] p-[1.5px] flex items-center">
+                      <div
+                        className="h-full bg-black rounded-[1.5px] transition-all"
+                        style={{
+                          width: `${Math.min(100, Math.max(10, data.batteryLevel))}%`,
+                        }}
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white mix-blend-difference tracking-tighter">
+                        {data.batteryLevel}
+                      </span>
+                    </div>
+                    <div className="w-[1.5px] h-[4.5px] bg-black rounded-r-[1px] ml-[0.5px]" />
                   </div>
-                  <div className="w-[1.5px] h-[4.5px] bg-black rounded-r-[1px] ml-[0.5px]" />
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Header: Logo Viettel Money & "Chia sẻ" */}
-            <div className="flex items-center justify-between px-7 pt-4 pb-2">
+            <div
+              className={`flex items-center justify-between px-7 pb-2 ${
+                !data.showStatusBar
+                  ? data.includeFrame
+                    ? "pt-8"
+                    : "pt-6"
+                  : "pt-4"
+              }`}
+            >
               <div className="h-9 flex items-center">
                 <img
                   src="/images/logo.png"

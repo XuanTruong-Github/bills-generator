@@ -1,4 +1,5 @@
 export interface BillData {
+  showStatusBar: boolean;
   time: string;
   batteryLevel: number;
   showWifi: boolean;
@@ -13,6 +14,7 @@ export interface BillData {
 }
 
 export const DEFAULT_BILL_DATA: BillData = {
+  showStatusBar: false,
   time: "21:17",
   batteryLevel: 59,
   showWifi: true,
